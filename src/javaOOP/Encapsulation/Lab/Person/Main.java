@@ -1,4 +1,4 @@
-package Person;
+package javaOOP.Encapsulation.Lab.Person;
 
 import java.io.BufferedReader;
 import java.io.IOException;

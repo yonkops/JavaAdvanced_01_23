@@ -1,4 +1,4 @@
-package Person;
+package javaOOP.Encapsulation.Lab.Person;
 
 class Person {
     private String firstName;

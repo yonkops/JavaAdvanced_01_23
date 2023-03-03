@@ -39,7 +39,7 @@ public class StudentSystem {
             } else if (studentGrade < EXCELLENT_SCORE && studentGrade >= AVERAGE_SCORE) {
                 output.append(" Average student.");
             } else {
-                output.append(" Very nice person.");
+                output.append(" Very nice javaOOP.Inheritance.Exercise.person.");
             }
             System.out.println(output);
         }
