@@ -40,7 +40,7 @@ public class Main {
 
 // Get Statistics
         System.out.println(shelter.getStatistics());
-//The shelter has the following animals:
+//The shelter has the following javaOOP.Polymorphism.Lab.animals:
 //Bela Sia
 //Stormy George
 

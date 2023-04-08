@@ -39,7 +39,7 @@ public class Person {
     }
 
     public List<Product> getProductList() {
-        return Collections.unmodifiableList(productList);
+        return productList;
     }
 
 }

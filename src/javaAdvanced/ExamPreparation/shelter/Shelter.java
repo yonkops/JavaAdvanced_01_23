@@ -55,7 +55,7 @@ public class Shelter {
     }
     public String getStatistics(){
         StringBuilder sb = new StringBuilder();
-        sb.append("The shelter has the following animals:");
+        sb.append("The shelter has the following javaOOP.Polymorphism.Lab.animals:");
         for (Animal animal : data) {
             sb.append(System.lineSeparator());
             sb.append(animal.getName()).append(" ")
