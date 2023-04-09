@@ -1,23 +1,14 @@
 package robotService.core;
 
-import robotService.entities.robot.FemaleRobot;
-import robotService.entities.robot.MaleRobot;
-import robotService.entities.robot.Robot;
-import robotService.entities.services.MainService;
-import robotService.entities.services.SecondaryService;
-import robotService.entities.services.Service;
-import robotService.entities.supplements.MetalArmor;
-import robotService.entities.supplements.PlasticArmor;
-import robotService.entities.supplements.Supplement;
+import robotService.entities.robot.*;
+import robotService.entities.services.*;
+import robotService.entities.supplements.*;
 import robotService.repositories.SupplementRepository;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import static robotService.common.ConstantMessages.*;
 import static robotService.common.ExceptionMessages.*;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ControllerImpl implements Controller{
 
@@ -26,16 +17,17 @@ public class ControllerImpl implements Controller{
 
     public ControllerImpl() {
         this.supplements = new SupplementRepository();
-        this.services = new LinkedHashMap();
+        this.services = new LinkedHashMap<>();
     }
 
     @Override
     public String addService(String type, String name) {
+        Service service;
         if (type.equals("MainService")) {
-            Service service = new MainService(name);
+            service = new MainService(name);
             services.put(name, service);
         } else if (type.equals("SecondaryService")) {
-            Service service = new SecondaryService(name);
+            service = new SecondaryService(name);
             services.put(name, service);
         } else {
             throw new NullPointerException(INVALID_SERVICE_TYPE);
@@ -45,11 +37,12 @@ public class ControllerImpl implements Controller{
 
     @Override
     public String addSupplement(String type) {
+        Supplement supplement;
         if (type.equals("PlasticArmor")) {
-            Supplement supplement = new PlasticArmor();
+            supplement = new PlasticArmor();
             supplements.addSupplement(supplement);
         } else if (type.equals("MetalArmor")) {
-            Supplement supplement = new MetalArmor();
+            supplement = new MetalArmor();
             supplements.addSupplement(supplement);
         } else {
             throw new IllegalArgumentException(INVALID_SUPPLEMENT_TYPE);
@@ -76,27 +69,22 @@ public class ControllerImpl implements Controller{
     @Override
     public String addRobot(String serviceName, String robotType, String robotName, String robotKind, double price) {
         Service service = services.get(serviceName);
-        String message;
+        Robot robot;
+        String suitableService;
         if (robotType.equals("FemaleRobot")) {
-            Robot robot = new FemaleRobot(robotName,robotKind, price);
-            if (service.getClass().getSimpleName().equals("SecondaryService")) {
-                service.addRobot(robot);
-                message = String.format(SUCCESSFULLY_ADDED_ROBOT_IN_SERVICE, robotType, serviceName);
-            } else {
-                message = UNSUITABLE_SERVICE;
-            }
+            robot = new FemaleRobot(robotName,robotKind, price);
+            suitableService = "SecondaryService";
         } else if (robotType.equals("MaleRobot")) {
-            Robot robot = new MaleRobot(robotName,robotKind, price);
-            if (service.getClass().getSimpleName().equals("MainService")) {
-                service.addRobot(robot);
-                message = String.format(SUCCESSFULLY_ADDED_ROBOT_IN_SERVICE, robotType, serviceName);
-            } else {
-                message = UNSUITABLE_SERVICE;
-            }
+            robot = new MaleRobot(robotName,robotKind, price);
+            suitableService = "MainService";
         } else {
             throw new IllegalArgumentException(INVALID_ROBOT_TYPE);
         }
-        return message;
+        if (!suitableService.equals(service.getClass().getSimpleName())) {
+            return UNSUITABLE_SERVICE;
+        }
+        service.addRobot(robot);
+        return String.format(SUCCESSFULLY_ADDED_ROBOT_IN_SERVICE, robotType, serviceName);
     }
 
     @Override
