@@ -42,6 +42,8 @@ public abstract class BaseRobot implements Robot{
         this.price = price;
     }
 
+    public abstract String getService();
+
     @Override
     public String getName() {
         return name;

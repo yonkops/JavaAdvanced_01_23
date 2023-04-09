@@ -69,18 +69,15 @@ public class ControllerImpl implements Controller{
     @Override
     public String addRobot(String serviceName, String robotType, String robotName, String robotKind, double price) {
         Service service = services.get(serviceName);
-        Robot robot;
-        String suitableService;
+        BaseRobot robot;
         if (robotType.equals("FemaleRobot")) {
             robot = new FemaleRobot(robotName,robotKind, price);
-            suitableService = "SecondaryService";
         } else if (robotType.equals("MaleRobot")) {
             robot = new MaleRobot(robotName,robotKind, price);
-            suitableService = "MainService";
         } else {
             throw new IllegalArgumentException(INVALID_ROBOT_TYPE);
         }
-        if (!suitableService.equals(service.getClass().getSimpleName())) {
+        if (!robot.getService().equals(service.getClass().getSimpleName())) {
             return UNSUITABLE_SERVICE;
         }
         service.addRobot(robot);
